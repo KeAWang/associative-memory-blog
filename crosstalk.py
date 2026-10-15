@@ -10,7 +10,7 @@ is every other term. Each curve is computed at every rho in `rhos`, averaged ove
 
 Run: uv run crosstalk.py
 Writes data/crosstalk.json, the data behind the charts in the post
-"Every layer is an associative memory" (https://keawang.github.io/posts/growing-memory-layers/).
+"Every layer is a memory store" (https://alexwang.ai/posts/associative-memory/).
 """
 import json
 import math
@@ -59,6 +59,7 @@ scores = {
     "ReLU(s)": relu,
     "ReLU(s)*s": lambda s: relu(s) * s,
     "ReLU(s)^3": lambda s: relu(s) ** 3,
+    "Swish(s)*s": lambda s: s / (1 + np.exp(-s)) * s,  # SwiGLU MLP with the gate and input weights shared; Swish(s) = s * sigmoid(s)
     # the exponential and its series truncated after 2, 3 and 4 terms
     "exp2": lambda s: 1 + beta * s,
     "exp3": lambda s: 1 + beta * s + (beta * s) ** 2 / 2,
